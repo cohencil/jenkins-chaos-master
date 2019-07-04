@@ -12,6 +12,7 @@ services:
 #      - ./.git:/var/jenkins_lib/.git:ro
       - ./jenkins_home:/var/jenkins_home
       - ./material-blue.css:/var/jenkins_home/userContent/material-blue.css
+      - /var/run/docker.sock:/var/run/docker.sock
     environment:
       CASC_JENKINS_CONFIG: /var/casc_configs
       JENKINS_ADMIN_PASSWORD: ${JENKINS_ADMIN_PASSWORD:-admin}
