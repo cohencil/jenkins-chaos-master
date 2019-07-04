@@ -3,3 +3,13 @@
 package_upgrade: true
 packages:
  - git
+
+write_files:
+  - path: /etc/docker/daemon.json
+    owner: root:root
+    permissions: 0664
+    content: |
+      {
+        "debug": true,
+        "hosts": ["unix:///var/run/docker.sock","tcp://0.0.0.0:2376"]
+      }

@@ -3,7 +3,7 @@ jenkins:
     - docker:
         dockerApi:
           dockerHost:
-            uri: unix:///var/run/docker.sock
+            uri: tcp://172.17.0.1:2376
         name: docker-cloud
         templates:
           - name: docker-slave
