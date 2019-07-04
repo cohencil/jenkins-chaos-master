@@ -1,0 +1,19 @@
+jenkins:
+  clouds:
+    - docker:
+        dockerApi:
+          dockerHost:
+            uri: unix:///var/run/docker.sock
+        name: docker-cloud
+        templates:
+          - name: docker-slave
+            connector:
+              jnlp:
+                jenkinsUrl: http://172.17.0.1:8080
+                jnlpLauncher:
+                  vmargs: -Xmx1g
+            dockerTemplateBase:
+              image: jenkins/slave
+            remoteFs: /home/jenkins
+            instanceCapStr: 10
+            labelString: generic
