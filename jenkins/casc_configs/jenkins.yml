@@ -1,0 +1,45 @@
+jenkins:
+  numExecutors: 2
+  markupFormatter:
+    rawHtml:
+      disableSyntaxHighlighting: false
+
+  securityRealm:
+    local:
+      allowsSignup: false
+      users:
+        - id: admin
+          password: ${JENKINS_ADMIN_PASSWORD}
+
+  authorizationStrategy:
+    loggedInUsersCanDoAnything:
+      allowAnonymousRead: false
+
+  crumbIssuer:
+    standard:
+      excludeClientIPFromCrumb: true
+
+  remotingSecurity:
+    enabled: true
+
+unclassified:
+#  globalLibraries:
+#    libraries:
+#      - name: pipeline-library
+#        retriever:
+#          modernSCM:
+#            scm:
+#              git:
+#                remote: file:///var/jenkins_lib
+#        defaultVersion: master
+#        implicit: false
+#        allowVersionOverride: true
+#        includeInChangesets: true
+
+  simple-theme-plugin:
+    elements:
+      - cssUrl:
+          url: /userContent/material-blue.css
+
+  location:
+    adminAddress: jenkins-chaos-master@tikalk.com

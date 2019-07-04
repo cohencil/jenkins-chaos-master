@@ -1,0 +1,20 @@
+version: "3.6"
+
+services:
+  jenkins:
+    build: .
+    ports:
+      - 8080:8080
+      - 50000:50000
+    volumes:
+      - ./casc_configs:/var/casc_configs
+#      - ./src:/var/jenkins_lib/src:ro
+#      - ./.git:/var/jenkins_lib/.git:ro
+      - ./jenkins_home:/var/jenkins_home
+      - ./material-blue.css:/var/jenkins_home/userContent/material-blue.css
+    environment:
+      CASC_JENKINS_CONFIG: /var/casc_configs
+      JENKINS_ADMIN_PASSWORD: ${JENKINS_ADMIN_PASSWORD:-admin}
+      JAVA_OPTS: >
+        -Djenkins.install.runSetupWizard=false
+        -Dorg.apache.commons.jelly.tags.fmt.timeZone=UTC
