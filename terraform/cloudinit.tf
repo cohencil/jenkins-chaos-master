@@ -26,10 +26,18 @@ data "template_cloudinit_config" "cloundinit_config" {
     content_type = "text/x-shellscript"
     content      = data.template_file.terraform.rendered
   }
+
+  part {
+    content_type = "text/x-shellscript"
+    content = data.template_file.certbot.rendered
+  }
 }
 
 data "template_file" "cloud_config" {
   template = file("cloudinit/cloud_config")
+  vars = {
+    jenkins_url = "chaos-jenkins.fuse.tikal.io"
+  }
 }
 
 data "template_file" "git" {
@@ -63,5 +71,14 @@ data "template_file" "terraform" {
 
   vars = {
     version = "0.12.3"
+  }
+}
+
+data "template_file" "certbot" {
+  template = file("cloudinit/certbot.sh")
+
+  vars = {
+    hostmaster_email = "webmaster@tikal.io"
+    jenkins_url = "chaos-jenkins.fuse.tikal.io"
   }
 }

@@ -17,3 +17,14 @@ jenkins:
             remoteFs: /home/jenkins
             instanceCapStr: 10
             labelString: generic
+          - name: terraform
+            connector:
+              jnlp:
+                jenkinsUrl: http://172.17.0.1:8080
+                jnlpLauncher:
+                  vmargs: -Xmx1g
+            dockerTemplateBase:
+              image: hashicorp/terraform
+            remoteFs: /home/jenkins
+            instanceCapStr: 10
+            labelString: terraform
