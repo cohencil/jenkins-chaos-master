@@ -43,3 +43,14 @@ unclassified:
 
   location:
     adminAddress: jenkins-chaos-master@tikalk.com
+
+tool:
+  terraforminstallation:
+    installations:
+      - name: terraform
+        home: ""
+        properties:
+          - installSource:
+              installers:
+                - terraformInstaller:
+                    id: "0.12.3-linux-amd64"

@@ -61,6 +61,7 @@ ssh-credentials:1.17
 ssh-slaves:1.30.0
 structs:1.19
 subversion:2.12.1
+terraform:1.0.9
 timestamper:1.9
 token-macro:2.8
 workflow-aggregator:2.6
