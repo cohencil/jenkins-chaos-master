@@ -13,7 +13,7 @@ jenkins:
                 jnlpLauncher:
                   vmargs: -Xmx1g
             dockerTemplateBase:
-              image: jenkins/jnlp-slave
+              image: cohencil/jnlp-slave
             remoteFs: /home/jenkins
             instanceCapStr: 10
             labelString: generic
