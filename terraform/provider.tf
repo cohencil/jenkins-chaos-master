@@ -1,6 +1,6 @@
 provider "aws" {
-  profile = "tikal"
-  region  = "eu-central-1"
+  profile = var.profile
+  region  = var.region
   version = "~> 2.11"
 }
 

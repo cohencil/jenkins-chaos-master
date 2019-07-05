@@ -29,7 +29,12 @@ data "template_cloudinit_config" "cloundinit_config" {
 
   part {
     content_type = "text/x-shellscript"
-    content = data.template_file.certbot.rendered
+    content      = data.template_file.certbot.rendered
+  }
+
+  part {
+    content_type = "text/x-shellscript"
+    content      = data.template_file.motd.rendered
   }
 }
 
@@ -62,7 +67,7 @@ data "template_file" "aws" {
 
   vars = {
     user   = "ec2-user"
-    region = "eu-central-1"
+    region = var.region
   }
 }
 
@@ -79,6 +84,14 @@ data "template_file" "certbot" {
 
   vars = {
     hostmaster_email = "webmaster@tikal.io"
-    jenkins_url = "chaos-jenkins.fuse.tikal.io"
+    jenkins_url      = "chaos-jenkins.fuse.tikal.io"
+  }
+}
+
+data "template_file" "motd" {
+  template = file("cloudinit/motd.sh")
+
+  vars = {
+    shortname = "chaos-jenkins"
   }
 }
