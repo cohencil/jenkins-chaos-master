@@ -41,6 +41,26 @@ resource "aws_iam_policy" "jenkins_chaos_master_policy" {
                 "ssm:GetParameter"
             ],
             "Resource": "arn:aws:ssm:eu-central-1:329054710135:parameter/JENKINS_CHAOS_MASTER/PRIMARY_KEY"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "iam:GetRole",
+                "iam:GetPolicyVersion",
+                "iam:GetInstanceProfile",
+                "iam:GetPolicy",
+                "iam:ListAttachedRolePolicies"
+            ],
+            "Resource": [
+                "arn:aws:iam::329054710135:policy/jenkins-chaos-master-policy",
+                "arn:aws:iam::*:instance-profile/*",
+                "arn:aws:iam::329054710135:role/jenkins-chaos-master-role"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": "s3:*",
+            "Resource": "arn:aws:s3:::*"
         }
     ]
 }
@@ -50,4 +70,14 @@ EOF
 resource "aws_iam_role_policy_attachment" "policy_attach1" {
   role       = aws_iam_role.jenkins_chaos_master_role.name
   policy_arn = aws_iam_policy.jenkins_chaos_master_policy.arn
+}
+
+resource "aws_iam_role_policy_attachment" "policy_attach2" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEC2FullAccess"
+  role       = aws_iam_role.jenkins_chaos_master_role.name
+}
+
+resource "aws_iam_role_policy_attachment" "policy_attach3" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonRoute53FullAccess"
+  role       = aws_iam_role.jenkins_chaos_master_role.name
 }
