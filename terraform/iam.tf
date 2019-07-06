@@ -1,3 +1,19 @@
+data "aws_ssm_parameter" "github_client_sercret" {
+  name = "/JENKINS_CHAOS_MASTER/GITHUB_CLIENT_SERCRET"
+}
+
+data "aws_ssm_parameter" "ssh_key" {
+  name = "/JENKINS_CHAOS_MASTER/PRIMARY_KEY"
+}
+
+data "aws_ssm_parameter" "aws_access_key" {
+  name = "/JENKINS_CHAOS_MASTER/${var.iam_access_key_id}"
+}
+
+data "aws_ssm_parameter" "jenkins_admin_password" {
+  name = "/JENKINS_CHAOS_MASTER/JENKINS_ADMIN_PASSWORD"
+}
+
 resource "aws_iam_instance_profile" "iam_instance_profile" {
   name = "jenkins-chaos-master-iam-instance-profile"
   role = aws_iam_role.jenkins_chaos_master_role.name
@@ -25,46 +41,21 @@ resource "aws_iam_role" "jenkins_chaos_master_role" {
 EOF
 }
 
+data "template_file" "jenkins_chaos_master_policy" {
+  template = "${file("${path.module}/templates/policy.json.tpl")}"
+
+  vars = {
+    github_client_sercret_arn = data.aws_ssm_parameter.github_client_sercret.arn
+    ssh_key_arn = data.aws_ssm_parameter.ssh_key.arn
+    aws_secret_access_key = data.aws_ssm_parameter.aws_access_key.arn
+    jenkins_admin_password = data.aws_ssm_parameter.jenkins_admin_password.arn
+  }
+}
+
 resource "aws_iam_policy" "jenkins_chaos_master_policy" {
   name = "jenkins-chaos-master-policy"
   description = "Additional policies for jenkins-chaos-master"
-  policy = <<EOF
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Effect": "Allow",
-            "Action": [
-                "ssm:GetParameterHistory",
-                "ssm:GetParametersByPath",
-                "ssm:GetParameters",
-                "ssm:GetParameter"
-            ],
-            "Resource": "arn:aws:ssm:eu-central-1:329054710135:parameter/JENKINS_CHAOS_MASTER/PRIMARY_KEY"
-        },
-        {
-            "Effect": "Allow",
-            "Action": [
-                "iam:GetRole",
-                "iam:GetPolicyVersion",
-                "iam:GetInstanceProfile",
-                "iam:GetPolicy",
-                "iam:ListAttachedRolePolicies"
-            ],
-            "Resource": [
-                "arn:aws:iam::329054710135:policy/jenkins-chaos-master-policy",
-                "arn:aws:iam::*:instance-profile/*",
-                "arn:aws:iam::329054710135:role/jenkins-chaos-master-role"
-            ]
-        },
-        {
-            "Effect": "Allow",
-            "Action": "s3:*",
-            "Resource": "arn:aws:s3:::*"
-        }
-    ]
-}
-EOF
+  policy = data.template_file.jenkins_chaos_master_policy.rendered
 }
 
 resource "aws_iam_role_policy_attachment" "policy_attach1" {

@@ -5,6 +5,7 @@ variable "domain" {}
 variable "vpc_id" {}
 variable "subnet_id" {}
 variable "ami_id" {}
+variable "iam_access_key_id" {}
 variable "instance_type" {}
 variable "os_user" {}
 variable "volume_size" {}

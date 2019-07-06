@@ -48,6 +48,10 @@ data "template_file" "cloud_config" {
   vars = {
     instance_name = var.instance_name
     domain_name   = var.domain
+    aws_access_key_id = var.iam_access_key_id
+    aws_secret_access_key = data.aws_ssm_parameter.aws_access_key.value
+    region = var.region
+    user = var.os_user
   }
 }
 

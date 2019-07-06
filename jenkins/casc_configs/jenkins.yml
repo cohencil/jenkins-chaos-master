@@ -5,15 +5,25 @@ jenkins:
       disableSyntaxHighlighting: false
 
   securityRealm:
-    local:
-      allowsSignup: false
-      users:
-        - id: admin
-          password: ${JENKINS_ADMIN_PASSWORD}
+    github:
+      clientID: "fbf501736862d2010ee2"
+      clientSecret: "${GITHUB_CLIENT_SECRET}"
+      githubApiUri: "https://api.github.com"
+      githubWebUri: "https://github.com"
+      oauthScopes: "read:org,user:email,repo"
 
   authorizationStrategy:
-    loggedInUsersCanDoAnything:
-      allowAnonymousRead: false
+    github:
+      adminUserNames: "hagzag, asaph, cohencil, itaior, liyaka, rafi, mio-g, tikalwm,\
+        \ yorammi"
+      allowAnonymousJobStatusPermission: false
+      allowAnonymousReadPermission: false
+      allowCcTrayPermission: false
+      allowGithubWebHookPermission: false
+      authenticatedUserCreateJobPermission: false
+      authenticatedUserReadPermission: true
+      organizationNames: "tikalk"
+      useRepositoryPermissions: true
 
   crumbIssuer:
     standard:
@@ -35,6 +45,12 @@ credentials:
               privateKeySource:
                 directEntry:
                   privateKey: ${GIT_PRIVATE_KEY}
+          - aws:
+            scope: GLOBAL
+            id: "AWS"
+            accessKey: ${AWS_ACCESS_KEY_ID} #Load from Environment Variable
+            secretKey: ${AWS_SECRET_ACCESS_KEY} #Load from Environment Variable
+            description: "AWS Credentials"
 
 unclassified:
 #  globalLibraries:
