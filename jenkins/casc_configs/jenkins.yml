@@ -56,8 +56,38 @@ unclassified:
           url: /userContent/material-blue.css
 
   location:
-    adminAddress: jenkins-chaos-master@tikalk.com
+    adminAddress: webmaster@tikal.io
 
+jobs:
+  - script: |-
+      def projects = ['terraform']
+      projects.each{prj ->
+        pipelineJob(prj){
+          definition{
+            cpsScm{
+              lightweight(true)
+              scm{
+                git{
+                  remote {
+                    url('https://github.com/cohencil/jenkins-chaos-master.git')
+                  }
+                  branches("refs/heads/master")
+                }
+                scriptPath(prj + '/Jenkinsfile')
+              }
+            }
+          }
+        }
+      }
+      # Create views for each fuse group
+      # for(i in 1..10) {
+      #   listView('g0' + i) {
+      #   description('Job view for project g' + i)
+      #   jobs {
+      #       name('g${i}-.+')
+      #     }
+      #   }
+      # }
 tool:
   terraforminstallation:
     installations:
@@ -68,3 +98,9 @@ tool:
               installers:
                 - terraformInstaller:
                     id: "0.12.3-linux-amd64"
+      - name: "terraform_0.11.14"
+        properties:
+          - installSource:
+              installers:
+              - terraformInstaller:
+                  id: "0.11.14-linux-amd64"

@@ -1,0 +1,25 @@
+node('generic'){
+    sh 'terraform version'
+    checkout([$class: 'GitSCM', 
+               branches: [[name: '*/master']], 
+               doGenerateSubmoduleConfigurations: false, 
+               extensions: [], 
+               submoduleCfg: [], 
+               userRemoteConfigs: [[
+                credentialsId: 'ssh_private_key', 
+                url: 'git@github.com:cohencil/jenkins-chaos-master.git']]
+            ])
+    dir('terraform') {
+        stage('terraform init') {
+            sh 'terraform init -no-color'
+        }
+        
+        stage('terraform plan') {
+            sh 'terraform plan -no-color'
+        }
+        
+        // stage('terraform apply') {
+        //     sh 'terraform apply -input=false'
+        // }
+    }
+}
