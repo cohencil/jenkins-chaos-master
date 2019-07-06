@@ -27,11 +27,11 @@ credentials:
     domainCredentials:
       - credentials:
           - basicSSHUserPrivateKey:
-              scope: SYSTEM
+              scope: GLOBAL
               id: ssh_private_key
               username: admin
               passphrase:
-              description: "SSH private-key file"
+              description:
               privateKeySource:
                 directEntry:
                   privateKey: ${GIT_PRIVATE_KEY}
