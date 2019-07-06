@@ -89,7 +89,7 @@ data "template_file" "certbot" {
 
   vars = {
     hostmaster_email = "webmaster@tikal.io"
-    jenkins_url      = "chaos-jenkins.fuse.tikal.io"
+    jenkins_url      = var.instance_name
   }
 }
 
