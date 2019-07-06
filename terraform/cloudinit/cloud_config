@@ -5,25 +5,15 @@ packages:
  - git
 
 write_files:
-  - path: /home/${user}/.aws/credentials
-    owner: ${user}:${user}
-    permissions: 0664
-    content: |
-      [default]
-      aws_access_key_id = ${aws_access_key_id}
-      aws_secret_access_key = ${aws_secret_access_key}
-      region = ${region}
-      [tikal]
-      aws_access_key_id = ${aws_access_key_id}
-      aws_secret_access_key = ${aws_secret_access_key}
-      region = ${region}
   - path: /etc/docker/daemon.json
     owner: root:root
     permissions: 0664
     content: |
       {
         "debug": true,
-        "hosts": [ "unix:///var/run/docker.sock","tcp://0.0.0.0:2376"]
+        "hosts": [ "unix:///var/run/docker.sock",
+                   "tcp://0.0.0.0:2376"
+                 ]
       }
   - path: /etc/nginx/conf.d/jenkins.conf
     owner: root:root

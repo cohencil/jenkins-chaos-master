@@ -37,10 +37,6 @@ data "template_cloudinit_config" "cloundinit_config" {
     content      = data.template_file.run.rendered
   }
 
-  part {
-    content_type = "text/x-shellscript"
-    content      = data.template_file.motd.rendered
-  }
 }
 
 data "template_file" "cloud_config" {
@@ -48,8 +44,7 @@ data "template_file" "cloud_config" {
   vars = {
     instance_name = var.instance_name
     domain_name   = var.domain
-    aws_access_key_id = var.iam_access_key_id
-    aws_secret_access_key = data.aws_ssm_parameter.aws_access_key.value
+    
     region = var.region
     user = var.os_user
   }
@@ -77,6 +72,8 @@ data "template_file" "aws" {
 
   vars = {
     user   = var.os_user
+    aws_access_key_id = var.iam_access_key_id
+    aws_secret_access_key = data.aws_ssm_parameter.aws_access_key.value
     region = var.region
   }
 }
@@ -99,18 +96,12 @@ data "template_file" "certbot" {
   }
 }
 
-data "template_file" "motd" {
-  template = file("cloudinit/motd.sh")
-
-  vars = {
-    instance_name = var.instance_name
-  }
-}
-
 data "template_file" "run" {
   template = file("cloudinit/run.sh")
 
   vars = {
+    aws_access_key_id = var.iam_access_key_id
+    aws_secret_access_key = data.aws_ssm_parameter.aws_access_key.value
     user = var.os_user
   }
 }
