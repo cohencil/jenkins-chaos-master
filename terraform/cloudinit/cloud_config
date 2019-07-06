@@ -11,7 +11,7 @@ write_files:
     content: |
       {
         "debug": true,
-        "hosts": ["unix:///var/run/docker.sock","tcp://0.0.0.0:2376"]
+        "hosts": [ "unix:///var/run/docker.sock","tcp://0.0.0.0:2376"]
       }
   - path: /etc/nginx/conf.d/jenkins.conf
     owner: root:root
@@ -26,16 +26,16 @@ write_files:
       
       server {
         listen 80;
-        server_name ${jenkins_url};
+        server_name ${instance_name}.${domain_name};
         return 301 https://$host$request_uri;
       }
       
       server {
         listen 443 ssl;
-        server_name ${jenkins_url};
+        server_name ${instance_name}.${domain_name};
       
-        ssl_certificate /etc/letsencrypt/live/${jenkins_url}/fullchain.pem;
-        ssl_certificate_key /etc/letsencrypt/live/${jenkins_url}/privkey.pem;
+        ssl_certificate /etc/letsencrypt/live/${instance_name}.${domain_name}/fullchain.pem;
+        ssl_certificate_key /etc/letsencrypt/live/${instance_name}.${domain_name}/privkey.pem;
       
         location / {
           proxy_set_header        Host $host:$server_port;
@@ -49,6 +49,6 @@ write_files:
           proxy_request_buffering off;
           proxy_buffering off; # Required for HTTP-based CLI to work over SSL
           # workaround for https://issues.jenkins-ci.org/browse/JENKINS-45651
-          add_header 'X-SSH-Endpoint' '${jenkins_url}:50022' always;
+          add_header 'X-SSH-Endpoint' '${instance_name}.${domain_name}:50022' always;
         }
       }

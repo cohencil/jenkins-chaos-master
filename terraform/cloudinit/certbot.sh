@@ -12,7 +12,7 @@ yum -y install nginx
 systemctl stop nginx
 
 # create cert
-certbot certonly --standalone --non-interactive --agree-tos --email ${hostmaster_email} -d ${jenkins_url}
+certbot certonly --standalone --non-interactive --agree-tos --email ${hostmaster_email} -d ${instance_name}.${domain_name}
 
 # start nginx
 systemctl start nginx

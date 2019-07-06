@@ -7,7 +7,7 @@ node('generic'){
                submoduleCfg: [], 
                userRemoteConfigs: [[
                 credentialsId: 'ssh_private_key', 
-                url: 'git@github.com:cohencil/jenkins-chaos-master.git']]
+                url: 'https://github.com/cohencil/jenkins-chaos-master.git']]
             ])
     dir('terraform') {
         stage('terraform init') {

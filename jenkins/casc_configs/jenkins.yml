@@ -79,15 +79,6 @@ jobs:
           }
         }
       }
-      # Create views for each fuse group
-      # for(i in 1..10) {
-      #   listView('g0' + i) {
-      #   description('Job view for project g' + i)
-      #   jobs {
-      #       name('g${i}-.+')
-      #     }
-      #   }
-      # }
 tool:
   terraforminstallation:
     installations:

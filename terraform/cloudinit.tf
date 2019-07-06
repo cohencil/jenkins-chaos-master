@@ -34,19 +34,20 @@ data "template_cloudinit_config" "cloundinit_config" {
 
   part {
     content_type = "text/x-shellscript"
-    content      = data.template_file.motd.rendered
+    content      = data.template_file.run.rendered
   }
 
   part {
     content_type = "text/x-shellscript"
-    content      = data.template_file.run.rendered
+    content      = data.template_file.motd.rendered
   }
 }
 
 data "template_file" "cloud_config" {
   template = file("cloudinit/cloud_config")
   vars = {
-    jenkins_url = "chaos-jenkins.fuse.tikal.io"
+    instance_name = var.instance_name
+    domain_name   = var.domain
   }
 }
 
@@ -54,7 +55,7 @@ data "template_file" "git" {
   template = file("cloudinit/git.sh")
 
   vars = {
-    user = "ec2-user"
+    user = var.os_user
   }
 }
 
@@ -62,7 +63,7 @@ data "template_file" "docker" {
   template = file("cloudinit/docker.sh")
 
   vars = {
-    user    = "ec2-user"
+    user    = var.os_user
     version = "1.23.2"
   }
 }
@@ -71,7 +72,7 @@ data "template_file" "aws" {
   template = file("cloudinit/aws.sh")
 
   vars = {
-    user   = "ec2-user"
+    user   = var.os_user
     region = var.region
   }
 }
@@ -89,7 +90,8 @@ data "template_file" "certbot" {
 
   vars = {
     hostmaster_email = "webmaster@tikal.io"
-    jenkins_url      = var.instance_name
+    instance_name    = var.instance_name
+    domain_name      = var.domain
   }
 }
 
@@ -97,7 +99,7 @@ data "template_file" "motd" {
   template = file("cloudinit/motd.sh")
 
   vars = {
-    shortname = "chaos-jenkins"
+    instance_name = var.instance_name
   }
 }
 
@@ -105,6 +107,6 @@ data "template_file" "run" {
   template = file("cloudinit/run.sh")
 
   vars = {
-    user   = "ec2-user"
+    user = var.os_user
   }
 }
