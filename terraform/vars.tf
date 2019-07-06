@@ -9,3 +9,5 @@ variable "instance_type" {}
 variable "volume_size" {}
 variable "ssh_keypair_name" {}
 variable "instance_name" {}
+variable "existing_eip_tag" {}
+

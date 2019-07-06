@@ -15,13 +15,13 @@ resource "aws_instance" "jenkins_chaos_master" {
 
   tags = merge(
     local.common_tags,
-    map("Name", local.instance_name)
+    map("Name", var.instance_name)
   )
 }
 
 data "aws_eip" "eip" {
   tags = {
-    Name = local.instance_name
+    Name = var.existing_eip_tag
   }
 }
 
