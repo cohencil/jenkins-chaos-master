@@ -36,6 +36,11 @@ data "template_cloudinit_config" "cloundinit_config" {
     content_type = "text/x-shellscript"
     content      = data.template_file.motd.rendered
   }
+
+  part {
+    content_type = "text/x-shellscript"
+    content      = data.template_file.run.rendered
+  }
 }
 
 data "template_file" "cloud_config" {
@@ -93,5 +98,13 @@ data "template_file" "motd" {
 
   vars = {
     shortname = "chaos-jenkins"
+  }
+}
+
+data "template_file" "run" {
+  template = file("cloudinit/run.sh")
+
+  vars = {
+    user   = "ec2-user"
   }
 }

@@ -16,6 +16,7 @@ services:
     environment:
       CASC_JENKINS_CONFIG: /var/casc_configs
       JENKINS_ADMIN_PASSWORD: ${JENKINS_ADMIN_PASSWORD:-admin}
+      GIT_PRIVATE_KEY: ${GIT_PRIVATE_KEY}
       JAVA_OPTS: >
         -Djenkins.install.runSetupWizard=false
         -Dorg.apache.commons.jelly.tags.fmt.timeZone=UTC

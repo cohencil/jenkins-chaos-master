@@ -22,6 +22,20 @@ jenkins:
   remotingSecurity:
     enabled: true
 
+credentials:
+  system:
+    domainCredentials:
+      - credentials:
+          - basicSSHUserPrivateKey:
+              scope: SYSTEM
+              id: ssh_private_key
+              username: admin
+              passphrase:
+              description: "SSH private-key file"
+              privateKeySource:
+                directEntry:
+                  privateKey: ${GIT_PRIVATE_KEY}
+
 unclassified:
 #  globalLibraries:
 #    libraries:
