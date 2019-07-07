@@ -14,6 +14,7 @@ node('generic'){
         dir('terraform') {
             stage('terraform init') {
                 sh 'terraform init'
+                sh 'terraform workspace select supernova'
             }
 
             stage('terraform plan') {
