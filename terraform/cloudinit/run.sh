@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-su - ${user} -c "export GIT_PRIVATE_KEY=\`cat ~/.ssh/id_rsa\`; export GITHUB_CLIENT_SECRET=\`cat ~/.github/secret\`; cd ~/jenkins-chaos-master/jenkins; /usr/local/bin/docker-compose down --remove-orphans ;/usr/local/bin/docker-compose up -d"
+su - ${user} -c "export JENKINS_ADMIN_PASSWORD=\`aws ssm get-parameter --name /JENKINS_CHAOS_MASTER/JENKINS_ADMIN_PASSWORD --with-decryption --query "Parameter.Value" --output text\`; export GIT_PRIVATE_KEY=\`cat ~/.ssh/id_rsa\`; export GITHUB_CLIENT_SECRET=\`cat ~/.github/secret\`; cd ~/jenkins-chaos-master/jenkins; /usr/local/bin/docker-compose down --remove-orphans ;/usr/local/bin/docker-compose up -d"
