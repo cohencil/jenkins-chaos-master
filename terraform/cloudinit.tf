@@ -72,8 +72,6 @@ data "template_file" "aws" {
 
   vars = {
     user                  = var.os_user
-    aws_access_key_id     = var.iam_access_key_id
-    aws_secret_access_key = data.aws_ssm_parameter.aws_access_key.value
     region                = var.region
   }
 }
