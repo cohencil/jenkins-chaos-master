@@ -8,18 +8,21 @@ node('generic'){
                userRemoteConfigs: [[
                 credentialsId: 'ssh_private_key', 
                 url: 'https://github.com/cohencil/jenkins-chaos-master.git']]
-            ])
-    dir('terraform') {
-        stage('terraform init') {
-            sh 'terraform init -no-color'
+    ])
+
+    ansiColor('xterm') {
+        dir('terraform') {
+            stage('terraform init') {
+                sh 'terraform init'
+            }
+
+            stage('terraform plan') {
+                sh 'terraform plan'
+            }
+
+            //stage('terraform apply') {
+            //    sh 'terraform apply -input=false'
+            //}
         }
-        
-        stage('terraform plan') {
-            sh 'terraform plan -no-color'
-        }
-        
-        // stage('terraform apply') {
-        //     sh 'terraform apply -input=false'
-        // }
     }
 }
