@@ -85,27 +85,6 @@ unclassified:
   location:
     adminAddress: webmaster@tikal.io
 
-jobs:
-  - script: |-
-      def projects = ['terraform']
-      projects.each{prj ->
-        pipelineJob(prj){
-          definition{
-            cpsScm{
-              lightweight(true)
-              scm{
-                git{
-                  remote {
-                    url('https://github.com/cohencil/jenkins-chaos-master.git')
-                  }
-                  branches("refs/heads/master")
-                }
-                scriptPath(prj + '/Jenkinsfile')
-              }
-            }
-          }
-        }
-      }
 tool:
   terraforminstallation:
     installations:
