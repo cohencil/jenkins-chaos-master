@@ -15,7 +15,7 @@ resource "aws_instance" "chaos_master" {
 
   tags = merge(
     local.common_tags,
-    map("Name", var.instance_name)
+    map("Name", terraform.workspace)
   )
 }
 
