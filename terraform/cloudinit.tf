@@ -41,12 +41,12 @@ data "template_cloudinit_config" "cloundinit_config" {
 
 data "template_file" "cloud_config" {
   template = file("cloudinit/cloud_config")
+
   vars = {
     instance_name = terraform.workspace
     domain_name   = var.domain
-    
-    region = var.region
-    user = var.os_user
+    region        = var.region
+    user          = var.os_user
   }
 }
 
@@ -71,10 +71,10 @@ data "template_file" "aws" {
   template = file("cloudinit/aws.sh")
 
   vars = {
-    user   = var.os_user
-    aws_access_key_id = var.iam_access_key_id
+    user                  = var.os_user
+    aws_access_key_id     = var.iam_access_key_id
     aws_secret_access_key = data.aws_ssm_parameter.aws_access_key.value
-    region = var.region
+    region                = var.region
   }
 }
 
@@ -100,8 +100,8 @@ data "template_file" "run" {
   template = file("cloudinit/run.sh")
 
   vars = {
-    aws_access_key_id = var.iam_access_key_id
+    aws_access_key_id     = var.iam_access_key_id
     aws_secret_access_key = data.aws_ssm_parameter.aws_access_key.value
-    user = var.os_user
+    user                  = var.os_user
   }
 }
