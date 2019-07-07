@@ -1,7 +1,7 @@
-resource "aws_instance" "jenkins_chaos_master" {
+resource "aws_instance" "chaos_master" {
   user_data              = data.template_cloudinit_config.cloundinit_config.rendered
   iam_instance_profile   = aws_iam_instance_profile.iam_instance_profile.name
-  vpc_security_group_ids = [aws_security_group.jenkins_chaos_master_sg.id]
+  vpc_security_group_ids = [aws_security_group.chaos_master_sg.id]
   subnet_id              = var.subnet_id
   ami                    = var.ami_id
   availability_zone      = var.az
@@ -21,11 +21,11 @@ resource "aws_instance" "jenkins_chaos_master" {
 
 data "aws_eip" "eip" {
   tags = {
-    Name = var.existing_eip_tag
+    Name = "${terraform.workspace}-chaos-master"
   }
 }
 
 resource "aws_eip_association" "eip_association" {
-  instance_id   = aws_instance.jenkins_chaos_master.id
+  instance_id   = aws_instance.chaos_master.id
   allocation_id = data.aws_eip.eip.id
 }

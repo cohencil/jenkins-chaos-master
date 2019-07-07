@@ -1,5 +1,5 @@
 provider "aws" {
-  profile = var.profile
+  profile = terraform.workspace
   region  = var.region
   version = "~> 2.11"
 }

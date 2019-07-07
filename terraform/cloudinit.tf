@@ -42,7 +42,7 @@ data "template_cloudinit_config" "cloundinit_config" {
 data "template_file" "cloud_config" {
   template = file("cloudinit/cloud_config")
   vars = {
-    instance_name = var.instance_name
+    instance_name = terraform.workspace
     domain_name   = var.domain
     
     region = var.region
@@ -91,7 +91,7 @@ data "template_file" "certbot" {
 
   vars = {
     hostmaster_email = "webmaster@tikal.io"
-    instance_name    = var.instance_name
+    instance_name    = terraform.workspace
     domain_name      = var.domain
   }
 }
