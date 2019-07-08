@@ -24,7 +24,7 @@ resource "aws_security_group_rule" "ing_tcp22" {
   protocol          = "tcp"
   from_port         = 22
   to_port           = 22
-  cidr_blocks       = ["195.182.33.5/32", "82.166.134.98/32", "79.180.6.173/32"]
+  cidr_blocks       = ["195.182.33.5/32", "82.166.134.98/32", "109.67.112.187/32"]
   description       = "corp"
 }
 
@@ -34,7 +34,7 @@ resource "aws_security_group_rule" "ing_tcp8080" {
   protocol          = "tcp"
   from_port         = 8080
   to_port           = 8080
-  cidr_blocks       = ["195.182.33.5/32", "82.166.134.98/32", "79.180.6.173/32"]
+  cidr_blocks       = ["195.182.33.5/32", "82.166.134.98/32", "109.67.112.187/32"]
   description       = "corp"
 }
 
