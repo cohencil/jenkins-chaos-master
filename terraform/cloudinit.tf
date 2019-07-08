@@ -4,102 +4,60 @@ data "template_cloudinit_config" "cloundinit_config" {
 
   part {
     content_type = "text/cloud-config"
-    content      = data.template_file.cloud_config.rendered
+    content = templatefile("${path.module}/cloudinit/cloud_config", {
+      instance_name = terraform.workspace
+      domain_name   = var.domain
+      region        = var.region
+      user          = var.os_user
+    })
   }
 
   part {
     content_type = "text/x-shellscript"
-    content      = data.template_file.docker.rendered
+    content = templatefile("${path.module}/cloudinit/docker.sh", {
+      user    = var.os_user
+      version = "1.23.2"
+    })
   }
 
   part {
     content_type = "text/x-shellscript"
-    content      = data.template_file.git.rendered
+    content = templatefile("${path.module}/cloudinit/git.sh", {
+      user = var.os_user
+    })
   }
 
   part {
     content_type = "text/x-shellscript"
-    content      = data.template_file.aws.rendered
+    content = templatefile("${path.module}/cloudinit/aws.sh", {
+      user   = var.os_user
+      region = var.region
+    })
   }
 
   part {
     content_type = "text/x-shellscript"
-    content      = data.template_file.terraform.rendered
+    content = templatefile("${path.module}/cloudinit/terraform.sh", {
+      version = "0.12.3"
+    })
   }
 
   part {
     content_type = "text/x-shellscript"
-    content      = data.template_file.certbot.rendered
+    content = templatefile("${path.module}/cloudinit/certbot.sh", {
+      hostmaster_email = "webmaster@tikal.io"
+      instance_name    = terraform.workspace
+      domain_name      = var.domain
+    })
   }
 
   part {
     content_type = "text/x-shellscript"
-    content      = data.template_file.run.rendered
+    content = templatefile("${path.module}/cloudinit/run.sh", {
+      aws_access_key_id     = var.iam_access_key_id
+      aws_secret_access_key = data.aws_ssm_parameter.aws_access_key.value
+      user                  = var.os_user
+    })
   }
 
-}
-
-data "template_file" "cloud_config" {
-  template = file("cloudinit/cloud_config")
-
-  vars = {
-    instance_name = terraform.workspace
-    domain_name   = var.domain
-    region        = var.region
-    user          = var.os_user
-  }
-}
-
-data "template_file" "git" {
-  template = file("cloudinit/git.sh")
-
-  vars = {
-    user = var.os_user
-  }
-}
-
-data "template_file" "docker" {
-  template = file("cloudinit/docker.sh")
-
-  vars = {
-    user    = var.os_user
-    version = "1.23.2"
-  }
-}
-
-data "template_file" "aws" {
-  template = file("cloudinit/aws.sh")
-
-  vars = {
-    user                  = var.os_user
-    region                = var.region
-  }
-}
-
-data "template_file" "terraform" {
-  template = file("cloudinit/terraform.sh")
-
-  vars = {
-    version = "0.12.3"
-  }
-}
-
-data "template_file" "certbot" {
-  template = file("cloudinit/certbot.sh")
-
-  vars = {
-    hostmaster_email = "webmaster@tikal.io"
-    instance_name    = terraform.workspace
-    domain_name      = var.domain
-  }
-}
-
-data "template_file" "run" {
-  template = file("cloudinit/run.sh")
-
-  vars = {
-    aws_access_key_id     = var.iam_access_key_id
-    aws_secret_access_key = data.aws_ssm_parameter.aws_access_key.value
-    user                  = var.os_user
-  }
 }
