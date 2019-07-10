@@ -64,18 +64,18 @@ credentials:
           #     description: "AWS Credentials"
 
 unclassified:
-#  globalLibraries:
-#    libraries:
-#      - name: pipeline-library
-#        retriever:
-#          modernSCM:
-#            scm:
-#              git:
-#                remote: file:///var/jenkins_lib
-#        defaultVersion: master
-#        implicit: false
-#        allowVersionOverride: true
-#        includeInChangesets: true
+  #  globalLibraries:
+  #    libraries:
+  #      - name: pipeline-library
+  #        retriever:
+  #          modernSCM:
+  #            scm:
+  #              git:
+  #                remote: file:///var/jenkins_lib
+  #        defaultVersion: master
+  #        implicit: false
+  #        allowVersionOverride: true
+  #        includeInChangesets: true
 
   simple-theme-plugin:
     elements:
@@ -88,16 +88,16 @@ unclassified:
 tool:
   terraforminstallation:
     installations:
-      - name: terraform
-        home: ""
+      - name: terraform_0.12.3
         properties:
           - installSource:
               installers:
                 - terraformInstaller:
-                    id: "0.12.3-linux-amd64"
-      - name: "terraform_0.11.14"
+                    id: 0.12.3-linux-amd64
+
+      - name: terraform_0.11.14
         properties:
           - installSource:
               installers:
-              - terraformInstaller:
-                  id: "0.11.14-linux-amd64"
+                - terraformInstaller:
+                    id: 0.11.14-linux-amd64
