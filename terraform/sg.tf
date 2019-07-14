@@ -38,6 +38,26 @@ resource "aws_security_group_rule" "ing_tcp8080" {
   description       = "corp"
 }
 
+resource "aws_security_group_rule" "ing_tcp22_chen" {
+  security_group_id = aws_security_group.chaos_master_sg.id
+  type              = "ingress"
+  protocol          = "tcp"
+  from_port         = 22
+  to_port           = 22
+  cidr_blocks       = ["79.179.66.24/32"]
+  description       = "chen"
+}
+
+resource "aws_security_group_rule" "ing_tcp8080_chen" {
+  security_group_id = aws_security_group.chaos_master_sg.id
+  type              = "ingress"
+  protocol          = "tcp"
+  from_port         = 8080
+  to_port           = 8080
+  cidr_blocks       = ["79.179.66.24/32"]
+  description       = "chen"
+}
+
 resource "aws_security_group_rule" "ing_tcp443" {
   security_group_id = aws_security_group.chaos_master_sg.id
   type              = "ingress"

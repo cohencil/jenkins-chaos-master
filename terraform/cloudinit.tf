@@ -53,11 +53,24 @@ data "template_cloudinit_config" "cloundinit_config" {
 
   part {
     content_type = "text/x-shellscript"
+    content = templatefile("${path.module}/cloudinit/gpg.sh", {
+      user = var.os_user
+      key  = data.aws_ssm_parameter.keybase_key.value
+    })
+  }
+
+  part {
+    content_type = "text/x-shellscript"
     content = templatefile("${path.module}/cloudinit/run.sh", {
       aws_access_key_id     = var.iam_access_key_id
       aws_secret_access_key = data.aws_ssm_parameter.aws_access_key.value
       user                  = var.os_user
     })
   }
+
+}
+
+data "aws_ssm_parameter" "keybase_key" {
+  name = "/JENKINS_CHAOS_MASTER/KEYBASE_PAPERKEY"
 
 }

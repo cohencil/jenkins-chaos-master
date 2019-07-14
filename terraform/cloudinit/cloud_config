@@ -3,6 +3,7 @@
 package_upgrade: true
 packages:
  - git
+ - https://prerelease.keybase.io/keybase_amd64.rpm
 
 write_files:
   - path: /etc/docker/daemon.json
