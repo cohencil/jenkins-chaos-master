@@ -57,6 +57,7 @@ data "template_cloudinit_config" "cloundinit_config" {
       user         = var.os_user
       paperkey     = data.aws_ssm_parameter.keybase_key.value
       keybase_user = "shelleg"
+      devicename   = "chaos_master_${terraform.workspace}"
     })
   }
 
