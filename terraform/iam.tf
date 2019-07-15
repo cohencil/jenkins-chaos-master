@@ -1,21 +1,5 @@
 data "aws_caller_identity" "current" {}
 
-data "aws_ssm_parameter" "github_client_sercret" {
-  name = "/JENKINS_CHAOS_MASTER/GITHUB_CLIENT_SERCRET"
-}
-
-data "aws_ssm_parameter" "ssh_key" {
-  name = "/JENKINS_CHAOS_MASTER/PRIMARY_KEY"
-}
-
-data "aws_ssm_parameter" "aws_access_key" {
-  name = "/JENKINS_CHAOS_MASTER/${var.iam_access_key_id}"
-}
-
-data "aws_ssm_parameter" "jenkins_admin_password" {
-  name = "/JENKINS_CHAOS_MASTER/JENKINS_ADMIN_PASSWORD"
-}
-
 resource "aws_iam_instance_profile" "iam_instance_profile" {
   name = "${terraform.workspace}-chaos-master-iam-instance-profile"
   role = aws_iam_role.chaos_master_role.name

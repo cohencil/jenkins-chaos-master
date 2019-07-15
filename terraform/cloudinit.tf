@@ -70,8 +70,3 @@ data "template_cloudinit_config" "cloundinit_config" {
   }
 
 }
-
-data "aws_ssm_parameter" "keybase_key" {
-  name = "/JENKINS_CHAOS_MASTER/KEYBASE_PAPERKEY"
-
-}
