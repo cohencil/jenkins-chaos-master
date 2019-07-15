@@ -53,9 +53,10 @@ data "template_cloudinit_config" "cloundinit_config" {
 
   part {
     content_type = "text/x-shellscript"
-    content = templatefile("${path.module}/cloudinit/gpg.sh", {
-      user = var.os_user
-      key  = data.aws_ssm_parameter.keybase_key.value
+    content = templatefile("${path.module}/cloudinit/keybase.sh", {
+      user         = var.os_user
+      paperkey     = data.aws_ssm_parameter.keybase_key.value
+      keybase_user = "shelleg"
     })
   }
 
